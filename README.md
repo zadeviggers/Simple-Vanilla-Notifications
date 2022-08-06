@@ -1,5 +1,7 @@
 # Simple Vanilla Notifications
 
+[Demo](https://svn.pages.dev/) | [GitHub](https://github.com/zadeviggers/Simple-Vanilla-Notifications)
+
 Quick to set up, easy to customise notifications/snackbars/toasts for vanilla JavaScript websites.
 
 ```
