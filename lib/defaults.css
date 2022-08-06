@@ -1,0 +1,53 @@
+.svn-notifications-container,
+.svn-notification,
+.svn-notification-close-button {
+	box-sizing: border-box;
+	font-family: sans-serif;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	background-color: inherit;
+	color: inherit;
+}
+
+.svn-notifications-container {
+	position: fixed;
+	right: 8px;
+	bottom: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	z-index: 1001;
+	align-items: flex-end;
+}
+
+.svn-notification {
+	width: max-content;
+	padding: 8px;
+	border-radius: 4px;
+	color: white;
+	background-color: grey;
+	user-select: none;
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.8);
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+.svn-notification-close-button {
+	padding: 8px;
+	display: inline-flex;
+	align-items: baseline;
+	justify-content: center;
+	border-radius: 4px;
+}
+
+.svn-notification-close-button:hover {
+	background-color: lightgrey;
+	color: black;
+}
+
+.svn-notification-close-button:active {
+	background-color: darkgrey;
+	color: black;
+}

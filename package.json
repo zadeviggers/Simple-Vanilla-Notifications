@@ -1,0 +1,26 @@
+{
+	"name": "simple-vanilla-notifications",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"private": false,
+	"version": "0.1.0",
+	"type": "module",
+	"files": [
+		"dist"
+	],
+	"main": "./dist/my-lib.umd.cjs",
+	"module": "./dist/my-lib.js",
+	"exports": {
+		".": {
+			"import": "./dist/my-lib.js",
+			"require": "./dist/my-lib.umd.cjs"
+		}
+	},
+	"devDependencies": {
+		"typescript": "^4.6.4",
+		"vite": "^3.0.0"
+	}
+}
