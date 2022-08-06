@@ -9,6 +9,7 @@ pnpm add simple-vanilla-notifications
 ## Example
 
 ```ts
+import "simple-vanilla-notifications/defaults.css";
 import { createNotificationManager } from "simple-vanilla-notifications";
 
 const { createNotification } = createNotificationManager();
