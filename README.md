@@ -14,7 +14,7 @@ import { createNotificationManager } from "simple-vanilla-notifications";
 
 const { createNotification } = createNotificationManager();
 
-const notification = createNotification("*dabs*");
+const notification = createNotification("Task failed successfully!");
 
 notification.destroy();
 ```
