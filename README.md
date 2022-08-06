@@ -3,14 +3,18 @@
 Quick to set up, easy to customise notifications/snackbars/toasts for vanilla JavaScript websites.
 
 ```
-pnpm i simple-vanilla-notifications
+pnpm add simple-vanilla-notifications
 ```
 
 ## Example
 
 ```ts
+import { createNotificationManager } from "simple-vanilla-notifications";
+
 const { createNotification } = createNotificationManager();
+
 const notification = createNotification("*dabs*");
+
 notification.destroy();
 ```
 
