@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
-		"preview": "vite preview"
+		"build-demo": "tsc && BUILD_DEMO=true vite build"
 	},
 	"type": "module",
 	"files": [
