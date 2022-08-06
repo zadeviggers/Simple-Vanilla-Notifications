@@ -1,6 +1,6 @@
 {
 	"name": "simple-vanilla-notifications",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
@@ -17,7 +17,8 @@
 		".": {
 			"import": "./dist/simple-vanilla-notifications.js",
 			"require": "./dist/simple-vanilla-notifications.umd.cjs"
-		}
+		},
+		"./defaults.css": "./dist/style.css"
 	},
 	"repository": {
 		"type": "git",
