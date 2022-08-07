@@ -29,6 +29,7 @@ export interface NotificationManager {
 		options?: NotificationOptions
 	) => Notification;
 	destroyNotification: (notificationID: NotificationID) => void;
+	destroyAllNotifications: () => void;
 	activeNotifications: ActiveNotifications;
 }
 
@@ -112,9 +113,14 @@ export function createNotificationManager({
 		activeNotifications.get(notificationID)?.destroy();
 	}
 
+	function destroyAllNotifications() {
+		activeNotifications.forEach((notification) => notification.destroy());
+	}
+
 	return {
 		activeNotifications,
 		createNotification,
-		destroyNotification: destroyNotification,
+		destroyNotification,
+		destroyAllNotifications,
 	};
 }

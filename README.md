@@ -93,11 +93,27 @@ const notification = createNotification("What is love?");
 destroyNotification(notification.id);
 ```
 
+#### `destroyAllNotifications`
+
+```ts
+const { createNotification, destroyAllNotifications } =
+	createNotificationManager({
+		defaultDismissible: false,
+		defaultTimeout: false,
+	});
+
+createNotification("Baby don't hurt me,");
+createNotification("don't hurt me,");
+
+// Destroys all notifications. Useful for cleaning up when a component is unmounted.
+destroyAllNotifications();
+```
+
 #### `activeNotifications`
 
 ```ts
 const { createNotification, activeNotifications } = createNotificationManager();
-createNotification("Baby don't hurt me,");
+createNotification("No more.");
 
 console.log(activeNotifications); // A Map of NotificationsIDs to Notification objects
 ```

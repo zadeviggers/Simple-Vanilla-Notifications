@@ -2,7 +2,8 @@ import "../lib/defaults.css";
 import "./styles.css";
 import { createNotificationManager, getNextNotificationID } from "../lib";
 
-const { createNotification, activeNotifications } = createNotificationManager();
+const { createNotification, activeNotifications, destroyAllNotifications } =
+	createNotificationManager();
 
 const autoDismissCheckbox: HTMLInputElement = document.getElementById(
 	"auto-dismiss"
@@ -24,7 +25,4 @@ const dismissButtonCheckbox: HTMLInputElement = document.getElementById(
 
 (
 	document.getElementById("destroy-all-button") as HTMLButtonElement
-).addEventListener("click", () => {
-	for (const notification of activeNotifications.values())
-		notification.destroy();
-});
+).addEventListener("click", destroyAllNotifications);
