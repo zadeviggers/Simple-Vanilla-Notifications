@@ -5,7 +5,7 @@
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
-		"deploy": "pnpm run build && pnpm publish"
+		"npm-deploy": "pnpm run build && pnpm publish"
 	},
 	"type": "module",
 	"files": [
