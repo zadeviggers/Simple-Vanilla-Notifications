@@ -66,26 +66,27 @@ export function createNotificationManager({
 	function createNotification(
 		contents: NotificationContents,
 		{
-			element = document.createElement("div"),
+			element,
 			dismissible = defaultDismissible,
 			timeout = defaultTimeout,
 		}: NotificationOptions = {}
 	): Notification {
 		if (destroyed) throw new NotificationManagerDestroyedError();
-
+		const notificationElement = element || document.createElement("div");
 		const id = getNextNotificationID(activeNotifications);
-		element.classList.add("svn-notification");
-		element.setAttribute("role", "status");
-		element.setAttribute("aria-live", "polite");
+		notificationElement.classList.add("svn-notification");
+		notificationElement.setAttribute("role", "status");
+		notificationElement.setAttribute("aria-live", "polite");
 
-		if (typeof contents === "string") element.innerText = contents;
-		else if (contents instanceof HTMLElement) element.appendChild(contents);
+		if (typeof contents === "string") notificationElement.innerText = contents;
+		else if (contents instanceof HTMLElement)
+			notificationElement.appendChild(contents);
 
 		let timeoutID: any;
 
 		function destroy() {
 			clearTimeout(timeoutID);
-			element.remove();
+			notificationElement.remove();
 			activeNotifications.delete(id);
 		}
 
@@ -102,18 +103,18 @@ export function createNotificationManager({
 			closeButton.classList.add("svn-notification-close-button");
 			closeButton.innerText = "X";
 			closeButton.addEventListener("click", destroy);
-			element.appendChild(closeButton);
+			notificationElement.appendChild(closeButton);
 		}
 
 		const notification: Notification = {
 			id,
 			timeoutID,
 			contents,
-			element,
+			element: notificationElement,
 			destroy,
 		};
 
-		element.appendChild(element);
+		containerElement.appendChild(notificationElement);
 		activeNotifications.set(id, notification);
 
 		return notification;
