@@ -35,7 +35,7 @@ console.log(notification.element); // The notification's HTML element.
 notification.destroy(); // Destroy the notification. Used internally by the dismiss button.
 ```
 
-### `createNotificationManager`
+### `createNotificationManager()`
 
 ```ts
 import { createNotificationManager } from "simple-vanilla-notifications";
@@ -59,7 +59,7 @@ const { createNotification } = createNotificationManager({
 createNotification("Hi! I'm a notification!");
 ```
 
-#### `createNotification`
+#### `createNotification()`
 
 ```ts
 const { createNotification } = createNotificationManager();
@@ -83,7 +83,7 @@ el.setAttribute("href", "https://youtu.be/dQw4w9WgXcQ");
 createNotification(el);
 ```
 
-#### `destroyNotification`
+#### `destroyNotification()`
 
 ```ts
 const { createNotification, destroyNotification } = createNotificationManager();
@@ -93,7 +93,7 @@ const notification = createNotification("What is love?");
 destroyNotification(notification.id);
 ```
 
-#### `destroyAllNotifications`
+#### `destroyAllNotifications()`
 
 ```ts
 const { createNotification, destroyAllNotifications } =
@@ -118,6 +118,44 @@ createNotification("No more.");
 console.log(activeNotifications); // A Map of NotificationsIDs to Notification objects
 ```
 
+#### `element`
+
+```ts
+const { element } = createNotificationManager();
+
+// The container element that notifications are rendered inside of
+console.log(element); // HTMLElement
+```
+
+#### `destroy()`
+
+```ts
+const { createNotification, destroy } = createNotificationManager();
+
+createNotification("Gas Gas Gas");
+createNotification("I'm gonna step on the gas");
+
+// Destroys all notifications, the container element, and renders the notification manager useless.
+destroy();
+
+// After destroy() is called, all functions throw errors when called.
+createNotification("Tonight, I'll fly (and be your lover)"); // Error!
+```
+
+#### `destroyed`
+
+```ts
+const { createNotification, destroy, destroyed } = createNotificationManager();
+
+createNotification("We're going on a trip, in our favourite rocket ship");
+
+console.log(destroyed); // false
+
+destroy();
+
+console.log(destroyed); // true
+```
+
 ## Customising
 
 Super easy to customise! You can just stop importing the `defaults.css` file and write your own styles to customise how the notifications look. The classes are as follows:
@@ -137,3 +175,14 @@ Super easy to customise! You can just stop importing the `defaults.css` file and
 ## Typescript
 
 The library is written in Typescript, so there should be built-in definitions. It should just work, but I may have messed up the build system so please open an issue if something's broken.
+
+## Server-Side Rendering
+
+Make sure that you don't call `createNotificationManager` until it's in a context that has the document object available. Most of the time, this means that you should only call it client side.
+You can do this in Solid by creating a signal for the notification manager that's initially null, and then create the manager and stick it in the Signal inside of an effect.
+
+## Clean up
+
+Most of the time you probably don't need to worry about this because you'll only have a single notification manager, but in some cases you might need to remove all of the notifications, or everything, including the notification container.
+
+There are two useful functions for this, both returned from `createNotificationManager`: `destroy` which destroys all of the active notifications and the container element (keep in mind that after calling this the notification manager is rendered completely useless, so only call this when you REALLY don't need it any more), and `destroyAllNotifications` which does what it says on the tin.

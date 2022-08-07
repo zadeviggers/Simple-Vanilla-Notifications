@@ -30,7 +30,15 @@ export interface NotificationManager {
 	) => Notification;
 	destroyNotification: (notificationID: NotificationID) => void;
 	destroyAllNotifications: () => void;
+	destroy: () => void;
+	destroyed: boolean;
+	element: HTMLElement;
 	activeNotifications: ActiveNotifications;
+}
+
+export class NotificationManagerDestroyedError extends Error {
+	message =
+		"The notification manager has been destroyed, so none of the functions work any more.";
 }
 
 export function getNextNotificationID(
@@ -47,11 +55,11 @@ export function createNotificationManager({
 	container,
 	defaultDismissible = true,
 }: NotificationManagerOptions = {}): NotificationManager {
-	if (!container) {
-		container = document.createElement("output");
-		document.body.appendChild(container);
-	}
-	container.classList.add("svn-notifications-container");
+	let destroyed = false;
+	let containerElement: HTMLElement =
+		container || document.createElement("output");
+	if (!container) document.body.appendChild(containerElement);
+	containerElement.classList.add("svn-notifications-container");
 
 	const activeNotifications: ActiveNotifications = new Map();
 
@@ -63,6 +71,8 @@ export function createNotificationManager({
 			timeout = defaultTimeout,
 		}: NotificationOptions = {}
 	): Notification {
+		if (destroyed) throw new NotificationManagerDestroyedError();
+
 		const id = getNextNotificationID(activeNotifications);
 		element.classList.add("svn-notification");
 		element.setAttribute("role", "status");
@@ -103,24 +113,36 @@ export function createNotificationManager({
 			destroy,
 		};
 
-		container?.appendChild(element);
+		element.appendChild(element);
 		activeNotifications.set(id, notification);
 
 		return notification;
 	}
 
-	function destroyNotification(notificationID: NotificationID): void {
+	function destroyNotification(notificationID: NotificationID) {
+		if (destroyed) throw new NotificationManagerDestroyedError();
 		activeNotifications.get(notificationID)?.destroy();
 	}
 
 	function destroyAllNotifications() {
+		if (destroyed) throw new NotificationManagerDestroyedError();
 		activeNotifications.forEach((notification) => notification.destroy());
+	}
+
+	function destroy() {
+		if (destroyed) throw new NotificationManagerDestroyedError();
+		destroyAllNotifications();
+		containerElement.remove();
+		destroyed = true;
 	}
 
 	return {
 		activeNotifications,
+		destroyed,
 		createNotification,
 		destroyNotification,
 		destroyAllNotifications,
+		destroy,
+		element: containerElement,
 	};
 }
