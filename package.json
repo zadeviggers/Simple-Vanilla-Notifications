@@ -1,11 +1,11 @@
 {
 	"name": "simple-vanilla-notifications",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
-		"publish": "pnpm run build && pnpm publish"
+		"deploy": "pnpm run build && pnpm publish"
 	},
 	"type": "module",
 	"files": [
