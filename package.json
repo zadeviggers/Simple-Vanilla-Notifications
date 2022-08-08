@@ -5,7 +5,7 @@
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
-		"lint": "publint",
+		"lint": "tsc --noEmit && eslint lib/*.ts && publint",
 		"npm-deploy": "pnpm run lint && pnpm run build && pnpm publish"
 	},
 	"repository": {
@@ -28,6 +28,9 @@
 	"module": "./dist/simple-vanilla-notifications.js",
 	"types": "./dist/index.d.ts",
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.33.0",
+		"@typescript-eslint/parser": "^5.33.0",
+		"eslint": "^8.21.0",
 		"publint": "^0.1.1",
 		"typescript": "^4.6.4",
 		"vite": "^3.0.0",

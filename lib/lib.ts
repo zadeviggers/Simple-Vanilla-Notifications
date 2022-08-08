@@ -11,7 +11,7 @@ export interface NotificationOptions {
 
 export interface Notification {
 	id: NotificationID;
-	timeoutID?: any;
+	timeoutID?: number;
 	contents: NotificationContents;
 	element: HTMLElement;
 	destroy: () => void;
@@ -56,7 +56,8 @@ export function createNotificationManager({
 	defaultDismissible = true,
 }: NotificationManagerOptions = {}): NotificationManager {
 	let destroyed = false;
-	let containerElement: HTMLElement =
+
+	const containerElement: HTMLElement =
 		container || document.createElement("output");
 	if (!container) document.body.appendChild(containerElement);
 	containerElement.classList.add("svn-notifications-container");
@@ -82,7 +83,7 @@ export function createNotificationManager({
 		else if (contents instanceof HTMLElement)
 			notificationElement.appendChild(contents);
 
-		let timeoutID: any;
+		let timeoutID: number | undefined;
 
 		function destroy() {
 			clearTimeout(timeoutID);
