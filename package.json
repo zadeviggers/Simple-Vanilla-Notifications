@@ -5,7 +5,8 @@
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
-		"npm-deploy": "pnpm run build && pnpm publish"
+		"lint": "publint",
+		"npm-deploy": "pnpm run lint && pnpm run build && pnpm publish"
 	},
 	"repository": {
 		"type": "git",
@@ -27,6 +28,7 @@
 	"module": "./dist/simple-vanilla-notifications.js",
 	"types": "./dist/index.d.ts",
 	"devDependencies": {
+		"publint": "^0.1.1",
 		"typescript": "^4.6.4",
 		"vite": "^3.0.0",
 		"vite-plugin-dts": "^1.4.1"
