@@ -7,24 +7,25 @@
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
 		"npm-deploy": "pnpm run build && pnpm publish"
 	},
-	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/zadeviggers/Simple-Vanilla-Notifications.git"
+	},
 	"files": [
 		"dist"
 	],
-	"main": "./dist/simple-vanilla-notifications.umd.cjs",
-	"module": "./dist/simple-vanilla-notifications.js",
-	"types": "./dist/index.d.ts",
+	"type": "module",
 	"exports": {
 		".": {
+			"types": "./dist/index.d.ts",
 			"import": "./dist/simple-vanilla-notifications.js",
 			"require": "./dist/simple-vanilla-notifications.umd.cjs"
 		},
 		"./defaults.css": "./dist/style.css"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/zadeviggers/Simple-Vanilla-Notifications.git"
-	},
+	"main": "./dist/simple-vanilla-notifications.umd.cjs",
+	"module": "./dist/simple-vanilla-notifications.js",
+	"types": "./dist/index.d.ts",
 	"devDependencies": {
 		"typescript": "^4.6.4",
 		"vite": "^3.0.0",
