@@ -8,7 +8,7 @@ export interface NotificationOptions {
 	dismissible?: boolean;
 	autoDismissTimeout?: number;
 	animated?: boolean;
-	animationTime?: number;
+	exitAnimationTime?: number;
 }
 
 export interface Notification {
@@ -24,7 +24,7 @@ export interface NotificationManagerOptions {
 	defaultAutoDismissTimeout?: number;
 	defaultDismissible?: boolean;
 	defaultAnimated?: boolean;
-	defaultAnimationTime?: number;
+	defaultExitAnimationTime?: number;
 }
 
 export interface NotificationManager {
@@ -59,7 +59,7 @@ export function createNotificationManager({
 	container,
 	defaultDismissible = true,
 	defaultAnimated = true,
-	defaultAnimationTime = 350,
+	defaultExitAnimationTime = 350,
 }: NotificationManagerOptions = {}): NotificationManager {
 	let destroyed = false;
 
@@ -77,7 +77,7 @@ export function createNotificationManager({
 			dismissible = defaultDismissible,
 			autoDismissTimeout = defaultAutoDismissTimeout,
 			animated = defaultAnimated,
-			animationTime = defaultAnimationTime,
+			exitAnimationTime = defaultExitAnimationTime,
 		}: NotificationOptions = {}
 	): Notification {
 		if (destroyed) throw new NotificationManagerDestroyedError();
@@ -107,7 +107,7 @@ export function createNotificationManager({
 			if (!animated) destroy();
 			notificationElement.classList.add("exiting");
 			destroy(false); // Remove the notification internally without removing it's element
-			setTimeout(destroy, animationTime);
+			setTimeout(destroy, exitAnimationTime);
 		}
 
 		// If the timeout should happen, schedule it
