@@ -4,7 +4,8 @@ import { createNotificationManager, getNextNotificationID } from "../lib";
 
 const { createNotification, activeNotifications, destroyAllNotifications } =
 	createNotificationManager();
-
+// @ts-expect-error Add to window without sacrificing types
+window.activeNotifications = activeNotifications;
 const autoDismissCheckbox: HTMLInputElement = document.getElementById(
 	"auto-dismiss"
 ) as HTMLInputElement;
