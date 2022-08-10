@@ -18,7 +18,7 @@ const dismissButtonCheckbox: HTMLInputElement = document.getElementById(
 ).addEventListener("click", () => {
 	const id = getNextNotificationID(activeNotifications);
 	createNotification(`Hello there! I am number #${id}`, {
-		timeout: autoDismissCheckbox.checked,
+		autoDismissTimeout: autoDismissCheckbox.checked ? 3200 : 0,
 		dismissible: dismissButtonCheckbox.checked,
 	});
 });
