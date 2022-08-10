@@ -6,7 +6,7 @@ export type ActiveNotifications = Map<NotificationID, Notification>;
 export interface NotificationOptions {
 	element?: HTMLElement;
 	dismissible?: boolean;
-	timeout?: number;
+	autoDismissTimeout?: number;
 	animated?: boolean;
 	animationTime?: number;
 }
@@ -21,7 +21,7 @@ export interface Notification {
 
 export interface NotificationManagerOptions {
 	container?: HTMLElement | null;
-	defaultTimeout?: number;
+	defaultAutoDismissTimeout?: number;
 	defaultDismissible?: boolean;
 	defaultAnimated?: boolean;
 	defaultAnimationTime?: number;
@@ -55,11 +55,11 @@ export function getNextNotificationID(
 }
 
 export function createNotificationManager({
-	defaultTimeout = 3200,
+	defaultAutoDismissTimeout = 3200,
 	container,
 	defaultDismissible = true,
 	defaultAnimated = true,
-	defaultAnimationTime = 250,
+	defaultAnimationTime = 350,
 }: NotificationManagerOptions = {}): NotificationManager {
 	let destroyed = false;
 
@@ -75,7 +75,7 @@ export function createNotificationManager({
 		{
 			element,
 			dismissible = defaultDismissible,
-			timeout = defaultTimeout,
+			autoDismissTimeout = defaultAutoDismissTimeout,
 			animated = defaultAnimated,
 			animationTime = defaultAnimationTime,
 		}: NotificationOptions = {}
@@ -103,6 +103,7 @@ export function createNotificationManager({
 		}
 
 		function dismiss() {
+			console.log("Dismissed");
 			if (!animated) destroy();
 			notificationElement.classList.add("exiting");
 			destroy(false); // Remove the notification internally without removing it's element
@@ -110,7 +111,8 @@ export function createNotificationManager({
 		}
 
 		// If the timeout should happen, schedule it
-		if (timeout > 0) timeoutID = setTimeout(dismiss, timeout);
+		if (autoDismissTimeout > 0)
+			timeoutID = setTimeout(dismiss, autoDismissTimeout);
 
 		if (dismissible) {
 			const closeButton = document.createElement("button");

@@ -40,7 +40,7 @@
 }
 
 .svn-notification.animated.exiting {
-	animation: slide-out 260ms ease-in;
+	animation: slide-out 350ms ease-in;
 }
 
 .svn-notification-close-button {
