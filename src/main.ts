@@ -2,7 +2,7 @@ import "../lib/defaults.css";
 import "./styles.css";
 import { createNotificationManager, getNextNotificationID } from "../lib";
 
-const { createNotification, activeNotifications, destroyAllNotifications } =
+const { createNotification, activeNotifications, dismissAllNotifications } =
 	createNotificationManager();
 // @ts-expect-error Add to window without sacrificing types
 window.activeNotifications = activeNotifications;
@@ -22,8 +22,12 @@ const dismissButtonCheckbox: HTMLInputElement = document.getElementById(
 		autoDismissTimeout: autoDismissCheckbox.checked ? 3200 : 0,
 		dismissible: dismissButtonCheckbox.checked,
 	});
+	createNotification("Looooooooooooooooooooooooong", {
+		autoDismissTimeout: autoDismissCheckbox.checked ? 3200 : 0,
+		dismissible: dismissButtonCheckbox.checked,
+	});
 });
 
 (
-	document.getElementById("destroy-all-button") as HTMLButtonElement
-).addEventListener("click", destroyAllNotifications);
+	document.getElementById("dismiss-all-button") as HTMLButtonElement
+).addEventListener("click", dismissAllNotifications);
