@@ -54,6 +54,16 @@ const { createNotification } = createNotificationManager({
 	// Whether or not to automatically add a dismiss button to the notifications.
 	// This can be overridden for each individual notification.
 	defaultDismissible: true,
+
+	// Whether to animate notifications.
+	// This can be overridden for each individual notification.
+	// NOTE: This doesn't actually animate notifications, it just adds an extra class to the elements. The animation is implemented in CSS.
+	animated: true,
+
+	// The amount to time to keep notification elements in the DOM after they're dismissed.
+	// This can be overridden for each individual notification.
+	// NOTE: This doesn't actually animate the notifications, it just adds an extra class to the elements. The animation is implemented in CSS.
+	exitAnimationTime: 3200,
 });
 
 createNotification("Hi! I'm a notification!");
@@ -75,6 +85,16 @@ createNotification(":))))", {
 	// Whether or not to automatically add a dismiss button to the notifications.
 	// If this is unset, it uses the defaultDismissible value set in createNotificationManager.
 	dismissible: true,
+
+	// Whether to animate the notification.
+	// If this is unset, it uses the defaultAnimated value set in createNotificationManager.
+	// NOTE: This doesn't actually animate the notification, it just adds an extra class to the element. The animation is implemented in CSS.
+	animated: true,
+
+	// The amount to time to keep the notification element in the DOM after it's dismissed.
+	// If this is unset, it uses the defaultExitAnimationTime value set in createNotificationManager.
+	// NOTE: This doesn't actually animate the notification, it just adds an extra class to the element. The animation is implemented in CSS.
+	exitAnimationTime: 3200,
 });
 
 // You can also pass an element as the notification contents.
