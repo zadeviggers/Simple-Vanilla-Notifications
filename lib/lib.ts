@@ -90,8 +90,12 @@ export function createNotificationManager({
 		notificationElement.setAttribute("aria-live", "polite");
 		if (animated) notificationElement.classList.add("svn-animated");
 
-		if (typeof contents === "string") notificationElement.innerText = contents;
-		else if (contents instanceof HTMLElement)
+		if (typeof contents === "string") {
+			const notificationContentsElement = document.createElement("span");
+			notificationContentsElement.classList.add("svn-notification-text");
+			notificationContentsElement.innerText = contents;
+			notificationElement.appendChild(notificationContentsElement);
+		} else if (contents instanceof HTMLElement)
 			notificationElement.appendChild(contents);
 
 		let timeoutID: number | undefined;

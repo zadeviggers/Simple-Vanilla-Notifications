@@ -22,8 +22,10 @@
 }
 
 .svn-notification {
-	max-width: 300px;
-	width: max-content;
+	--svn-button-size: 30px;
+	width: 300px;
+	overflow-wrap: normal;
+	text-overflow: ellipsis;
 	padding: 8px;
 	border-radius: 4px;
 	color: white;
@@ -43,12 +45,21 @@
 	animation: slide-out 350ms ease-in;
 }
 
+.svn-notification-text {
+	max-width: calc(100% - var(--svn-button-size));
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .svn-notification-close-button {
+	width: var(--svn-button-size);
+	height: var(--svn-button-size);
 	padding: 8px;
 	display: inline-flex;
 	align-items: baseline;
 	justify-content: center;
 	border-radius: 4px;
+	margin-left: auto;
 }
 
 .svn-notification-close-button:hover {
