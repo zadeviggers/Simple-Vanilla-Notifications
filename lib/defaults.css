@@ -35,11 +35,11 @@
 	align-items: center;
 }
 
-.svn-notification.animated {
+.svn-notification.svn-animated {
 	animation: slide-in 260ms ease-out;
 }
 
-.svn-notification.animated.exiting {
+.svn-notification.svn-animated.svn-exiting {
 	animation: slide-out 350ms ease-in;
 }
 

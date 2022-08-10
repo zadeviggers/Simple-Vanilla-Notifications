@@ -88,7 +88,7 @@ export function createNotificationManager({
 		notificationElement.classList.add("svn-notification");
 		notificationElement.setAttribute("role", "status");
 		notificationElement.setAttribute("aria-live", "polite");
-		if (animated) notificationElement.classList.add("animated");
+		if (animated) notificationElement.classList.add("svn-animated");
 
 		if (typeof contents === "string") notificationElement.innerText = contents;
 		else if (contents instanceof HTMLElement)
@@ -105,7 +105,7 @@ export function createNotificationManager({
 		function dismiss() {
 			console.log("Dismissed");
 			if (!animated) destroy();
-			notificationElement.classList.add("exiting");
+			notificationElement.classList.add("svn-exiting");
 			destroy(false); // Remove the notification internally without removing it's element
 			setTimeout(destroy, exitAnimationTime);
 		}
