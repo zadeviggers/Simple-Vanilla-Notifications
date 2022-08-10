@@ -6,7 +6,9 @@ export type ActiveNotifications = Map<NotificationID, Notification>;
 export interface NotificationOptions {
 	element?: HTMLElement;
 	dismissible?: boolean;
-	timeout?: number | boolean;
+	timeout?: number;
+	animated?: boolean;
+	animationTime?: number;
 }
 
 export interface Notification {
@@ -21,6 +23,8 @@ export interface NotificationManagerOptions {
 	container?: HTMLElement | null;
 	defaultTimeout?: number;
 	defaultDismissible?: boolean;
+	defaultAnimated?: boolean;
+	defaultAnimationTime?: number;
 }
 
 export interface NotificationManager {
@@ -54,6 +58,8 @@ export function createNotificationManager({
 	defaultTimeout = 3200,
 	container,
 	defaultDismissible = true,
+	defaultAnimated = true,
+	defaultAnimationTime = 250,
 }: NotificationManagerOptions = {}): NotificationManager {
 	let destroyed = false;
 
@@ -70,14 +76,19 @@ export function createNotificationManager({
 			element,
 			dismissible = defaultDismissible,
 			timeout = defaultTimeout,
+			animated = defaultAnimated,
+			animationTime = defaultAnimationTime,
 		}: NotificationOptions = {}
 	): Notification {
 		if (destroyed) throw new NotificationManagerDestroyedError();
-		const notificationElement = element || document.createElement("div");
+
 		const id = getNextNotificationID(activeNotifications);
+
+		const notificationElement = element || document.createElement("div");
 		notificationElement.classList.add("svn-notification");
 		notificationElement.setAttribute("role", "status");
 		notificationElement.setAttribute("aria-live", "polite");
+		if (animated) notificationElement.classList.add("animated");
 
 		if (typeof contents === "string") notificationElement.innerText = contents;
 		else if (contents instanceof HTMLElement)
@@ -85,25 +96,27 @@ export function createNotificationManager({
 
 		let timeoutID: number | undefined;
 
-		function destroy() {
+		function destroy(destroyElement = true) {
 			clearTimeout(timeoutID);
-			notificationElement.remove();
+			if (destroyElement) notificationElement.remove();
 			activeNotifications.delete(id);
 		}
 
-		let actualTimeout = defaultTimeout;
-		// If timeout is set to true, use the default
-		if (timeout === true) actualTimeout = defaultTimeout;
+		function dismiss() {
+			if (!animated) destroy();
+			notificationElement.classList.add("exiting");
+			destroy(false); // Remove the notification internally without removing it's element
+			setTimeout(destroy, animationTime);
+		}
 
 		// If the timeout should happen, schedule it
-		if (typeof timeout === "number" || timeout === true)
-			timeoutID = setTimeout(destroy, actualTimeout);
+		if (timeout > 0) timeoutID = setTimeout(dismiss, timeout);
 
 		if (dismissible) {
 			const closeButton = document.createElement("button");
 			closeButton.classList.add("svn-notification-close-button");
 			closeButton.innerText = "X";
-			closeButton.addEventListener("click", destroy);
+			closeButton.addEventListener("click", dismiss);
 			notificationElement.appendChild(closeButton);
 		}
 

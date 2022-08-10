@@ -47,7 +47,7 @@ const { createNotification } = createNotificationManager({
 	container: document.getElementByID("my-custom-container-element"),
 
 	// The amount of time after which notifications disappear on their own.
-	// Set this to false to disable the auto-dismiss functionality.
+	// Set this to a number <= 0 to disable the auto-dismiss functionality.
 	// This can be overridden for each individual notification.
 	defaultTimeout: 3200,
 
@@ -69,7 +69,7 @@ createNotification(":))))", {
 	element: document.createElement("div"),
 
 	// The amount of time after which the notification disappears on it's own.
-	// Set this to false to disable the auto-dismiss functionality.
+	// Set this to a number <= 0 to disable the auto-dismiss functionality.
 	timeout: 3200,
 
 	// Whether or not to automatically add a dismiss button to the notifications.

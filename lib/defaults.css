@@ -15,13 +15,14 @@
 	right: 8px;
 	bottom: 8px;
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	gap: 8px;
 	z-index: 1001;
 	align-items: flex-end;
 }
 
 .svn-notification {
+	max-width: 300px;
 	width: max-content;
 	padding: 8px;
 	border-radius: 4px;
@@ -32,6 +33,14 @@
 	display: flex;
 	gap: 8px;
 	align-items: center;
+}
+
+.svn-notification.animated {
+	animation: slide-in 260ms ease-out;
+}
+
+.svn-notification.animated.exiting {
+	animation: slide-out 260ms ease-in;
 }
 
 .svn-notification-close-button {
@@ -50,4 +59,22 @@
 .svn-notification-close-button:active {
 	background-color: darkgrey;
 	color: black;
+}
+
+@keyframes slide-in {
+	from {
+		transform: translateX(110%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-out {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(110%);
+	}
 }
