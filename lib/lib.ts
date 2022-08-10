@@ -16,7 +16,7 @@ export interface Notification {
 	timeoutID?: number;
 	contents: NotificationContents;
 	element: HTMLElement;
-	destroy: () => void;
+	dismiss: () => void;
 }
 
 export interface NotificationManagerOptions {
@@ -32,8 +32,8 @@ export interface NotificationManager {
 		contents: NotificationContents,
 		options?: NotificationOptions
 	) => Notification;
-	destroyNotification: (notificationID: NotificationID) => void;
-	destroyAllNotifications: () => void;
+	dismissNotification: (notificationID: NotificationID) => void;
+	dismissAllNotifications: () => void;
 	destroy: () => void;
 	destroyed: boolean;
 	element: HTMLElement;
@@ -127,7 +127,7 @@ export function createNotificationManager({
 			timeoutID,
 			contents,
 			element: notificationElement,
-			destroy,
+			dismiss,
 		};
 
 		containerElement.appendChild(notificationElement);
@@ -136,19 +136,19 @@ export function createNotificationManager({
 		return notification;
 	}
 
-	function destroyNotification(notificationID: NotificationID) {
+	function dismissNotification(notificationID: NotificationID) {
 		if (destroyed) throw new NotificationManagerDestroyedError();
-		activeNotifications.get(notificationID)?.destroy();
+		activeNotifications.get(notificationID)?.dismiss();
 	}
 
-	function destroyAllNotifications() {
+	function dismissAllNotifications() {
 		if (destroyed) throw new NotificationManagerDestroyedError();
-		activeNotifications.forEach((notification) => notification.destroy());
+		activeNotifications.forEach((notification) => notification.dismiss());
 	}
 
 	function destroy() {
 		if (destroyed) throw new NotificationManagerDestroyedError();
-		destroyAllNotifications();
+		dismissAllNotifications();
 		containerElement.remove();
 		destroyed = true;
 	}
@@ -157,8 +157,8 @@ export function createNotificationManager({
 		activeNotifications,
 		destroyed,
 		createNotification,
-		destroyNotification,
-		destroyAllNotifications,
+		dismissNotification,
+		dismissAllNotifications,
 		destroy,
 		element: containerElement,
 	};

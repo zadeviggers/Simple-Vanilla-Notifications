@@ -6,6 +6,7 @@
 
 - The `timeout` option has been renamed to `autoDismissTimeout` and `defaultAutoDismissTimeout`.
 - The `autoDismissTimeout` option no longer accepts a boolean. Set it to a number less tha or equal to zero to disable auto-dismissing notifications.
+- All of the methods to `destroy` a notification have been renamed to `dismiss`.
 
 ### Minor changes
 
