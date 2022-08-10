@@ -18,7 +18,7 @@ const { createNotification } = createNotificationManager();
 
 const notification = createNotification("Task failed successfully!");
 
-notification.destroy();
+notification.dismiss();
 ```
 
 ## Usage
@@ -29,10 +29,10 @@ notification.destroy();
 const { createNotification } = createNotificationManager();
 const notification = createNotification("What's popping?");
 
-console.log(notification.id); // The Notification's ID. Can be passed to destroyNotification().
+console.log(notification.id); // The Notification's ID. Can be passed to dismissNotification().
 console.log(notification.contents); // Whatever was passed as the first argument to createNotification().
 console.log(notification.element); // The notification's HTML element.
-notification.destroy(); // Destroy the notification. Used internally by the dismiss button.
+notification.dismiss(); // Dismiss the notification. Used internally by the dismiss button.
 ```
 
 ### `createNotificationManager()`
@@ -49,7 +49,7 @@ const { createNotification } = createNotificationManager({
 	// The amount of time after which notifications disappear on their own.
 	// Set this to a number <= 0 to disable the auto-dismiss functionality.
 	// This can be overridden for each individual notification.
-	defaultTimeout: 3200,
+	defaultAutoDismissTimeout: 3200,
 
 	// Whether or not to automatically add a dismiss button to the notifications.
 	// This can be overridden for each individual notification.
@@ -70,7 +70,7 @@ createNotification(":))))", {
 
 	// The amount of time after which the notification disappears on it's own.
 	// Set this to a number <= 0 to disable the auto-dismiss functionality.
-	timeout: 3200,
+	autoDismissTimeout: 3200,
 
 	// Whether or not to automatically add a dismiss button to the notifications.
 	// If this is unset, it uses the defaultDismissible value set in createNotificationManager.
@@ -83,30 +83,30 @@ el.setAttribute("href", "https://youtu.be/dQw4w9WgXcQ");
 createNotification(el);
 ```
 
-#### `destroyNotification()`
+#### `dismissNotification()`
 
 ```ts
-const { createNotification, destroyNotification } = createNotificationManager();
+const { createNotification, dismissNotification } = createNotificationManager();
 const notification = createNotification("What is love?");
 
-// Destroys a notification using it's ID
-destroyNotification(notification.id);
+// Dismisses a notification using it's ID
+dismissNotification(notification.id);
 ```
 
-#### `destroyAllNotifications()`
+#### `dismissAllNotifications()`
 
 ```ts
-const { createNotification, destroyAllNotifications } =
+const { createNotification, dismissAllNotifications } =
 	createNotificationManager({
 		defaultDismissible: false,
-		defaultTimeout: false,
+		defaultAutoDismissTimeout: false,
 	});
 
 createNotification("Baby don't hurt me,");
 createNotification("don't hurt me,");
 
-// Destroys all notifications. Useful for cleaning up when a component is unmounted.
-destroyAllNotifications();
+// Dismisses all notifications. Useful for cleaning up when a component is unmounted.
+dismissAllNotifications();
 ```
 
 #### `activeNotifications`
@@ -191,4 +191,4 @@ You can do this in Solid by creating a signal for the notification manager that'
 
 Most of the time you probably don't need to worry about this because you'll only have a single notification manager, but in some cases you might need to remove all of the notifications, or everything, including the notification container.
 
-There are two useful functions for this, both returned from `createNotificationManager`: `destroy` which destroys all of the active notifications and the container element (keep in mind that after calling this the notification manager is rendered completely useless, so only call this when you REALLY don't need it any more), and `destroyAllNotifications` which does what it says on the tin.
+There are two useful functions for this, both returned from `createNotificationManager`: `destroy` which destroys all of the active notifications and the container element (keep in mind that after calling this the notification manager is rendered completely useless, so only call this when you REALLY don't need it any more), and `dismissAllNotifications` which does what it says on the tin.
