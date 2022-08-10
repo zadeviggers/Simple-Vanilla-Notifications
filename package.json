@@ -6,7 +6,7 @@
 		"build": "tsc && vite build",
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
 		"lint": "tsc --noEmit && eslint lib/*.ts && publint",
-		"npm-deploy": "pnpm run lint && pnpm run build && pnpm publish"
+		"npm-publish": "pnpm run lint && pnpm run build && pnpm publish"
 	},
 	"repository": {
 		"type": "git",
