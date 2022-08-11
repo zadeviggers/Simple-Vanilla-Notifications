@@ -1,11 +1,11 @@
 {
 	"name": "simple-vanilla-notifications",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
-		"lint": "tsc --noEmit && eslint lib/*.ts && publint",
+		"lint": "pnpm run build && eslint lib/*.ts && publint",
 		"npm-publish": "pnpm run lint && pnpm run build && pnpm publish"
 	},
 	"repository": {
