@@ -101,7 +101,7 @@ export function createNotificationManager({
 		let timeoutID: Notification["timeoutID"];
 
 		function destroy(destroyElement = true) {
-			clearTimeout(timeoutID);
+			window.clearTimeout(timeoutID);
 			if (destroyElement) notificationElement.remove();
 			activeNotifications.delete(id);
 		}
@@ -111,12 +111,12 @@ export function createNotificationManager({
 			if (!animated) destroy();
 			notificationElement.classList.add("svn-exiting");
 			destroy(false); // Remove the notification internally without removing it's element
-			setTimeout(destroy, exitAnimationTime);
+			window.setTimeout(destroy, exitAnimationTime);
 		}
 
 		// If the timeout should happen, schedule it
 		if (autoDismissTimeout > 0) {
-			timeoutID = setTimeout(dismiss, autoDismissTimeout);
+			timeoutID = window.setTimeout(dismiss, autoDismissTimeout);
 		}
 
 		if (dismissible) {
