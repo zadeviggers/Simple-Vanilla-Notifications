@@ -13,7 +13,8 @@ export interface NotificationOptions {
 
 export interface Notification {
 	id: NotificationID;
-	timeoutID?: ReturnType<typeof window.setTimeout>;
+	// eslint-disable-next-line
+	timeoutID?: ReturnType<typeof window.setTimeout> | any;
 	contents: NotificationContents;
 	element: HTMLElement;
 	dismiss: () => void;
@@ -101,7 +102,8 @@ export function createNotificationManager({
 		let timeoutID: Notification["timeoutID"];
 
 		function destroy(destroyElement = true) {
-			window.clearTimeout(timeoutID);
+			// eslint-disable-next-line
+			window.clearTimeout(timeoutID as any);
 			if (destroyElement) notificationElement.remove();
 			activeNotifications.delete(id);
 		}
@@ -116,7 +118,8 @@ export function createNotificationManager({
 
 		// If the timeout should happen, schedule it
 		if (autoDismissTimeout > 0) {
-			timeoutID = window.setTimeout(dismiss, autoDismissTimeout);
+			// eslint-disable-next-line
+			timeoutID = setTimeout(dismiss, autoDismissTimeout) as any;
 		}
 
 		if (dismissible) {
