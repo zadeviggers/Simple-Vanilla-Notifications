@@ -45,6 +45,10 @@ export class NotificationManagerDestroyedError extends Error {
 		"The notification manager has been destroyed, so none of the functions work any more.";
 }
 
+// Fix stupid issues when building in different environments.
+// This tells Typescript that I want the timeout functions from the window, not from Node.
+const { setTimeout, clearTimeout } = window;
+
 export function getNextNotificationID(
 	activeNotifications: ActiveNotifications
 ): NotificationID {
