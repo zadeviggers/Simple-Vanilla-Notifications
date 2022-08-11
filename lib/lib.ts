@@ -13,7 +13,7 @@ export interface NotificationOptions {
 
 export interface Notification {
 	id: NotificationID;
-	timeoutID?: ReturnType<typeof setTimeout>;
+	timeoutID?: ReturnType<typeof window.setTimeout>;
 	contents: NotificationContents;
 	element: HTMLElement;
 	dismiss: () => void;
@@ -44,10 +44,6 @@ export class NotificationManagerDestroyedError extends Error {
 	message =
 		"The notification manager has been destroyed, so none of the functions work any more.";
 }
-
-// Fix stupid issues when building in different environments.
-// This tells Typescript that I want the timeout functions from the window, not from Node.
-const { setTimeout, clearTimeout } = window;
 
 export function getNextNotificationID(
 	activeNotifications: ActiveNotifications
@@ -119,8 +115,9 @@ export function createNotificationManager({
 		}
 
 		// If the timeout should happen, schedule it
-		if (autoDismissTimeout > 0)
+		if (autoDismissTimeout > 0) {
 			timeoutID = setTimeout(dismiss, autoDismissTimeout);
+		}
 
 		if (dismissible) {
 			const closeButton = document.createElement("button");
