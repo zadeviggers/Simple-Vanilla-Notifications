@@ -40,6 +40,20 @@
 	display: flex;
 	gap: var(--spacing);
 	align-items: center;
+	white-space: nowrap;
+}
+
+@media screen and (max-width: 480px) {
+	.svn-notifications-container {
+		right: 0;
+		bottom: 0;
+		left: 0;
+		align-items: flex-end;
+		max-height: 30vh;
+	}
+	.svn-notification {
+		width: 100%;
+	}
 }
 
 .svn-notification.svn-animated {
@@ -52,8 +66,9 @@
 
 .svn-notification-text {
 	max-width: calc(100% - var(--svn-button-size));
-	overflow: hidden;
 	text-overflow: ellipsis;
+	overflow-x: auto;
+	overflow-y: hidden;
 }
 
 .svn-notification-close-button {
