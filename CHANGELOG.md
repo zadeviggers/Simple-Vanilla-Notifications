@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0
+
+### Minor changes
+
+Make default container scrollable.
+
+### Patch changes
+
+Fix issues deploying on Cloudflare.
+
 ## 2.0.0
 
 ### Major changes
