@@ -11,14 +11,19 @@
 }
 
 .svn-notifications-container {
+	--spacing: 8px;
 	position: fixed;
-	right: 8px;
-	bottom: 8px;
+	right: 0;
+	bottom: 0;
+	padding: var(--spacing);
 	display: flex;
 	flex-direction: column-reverse;
-	gap: 8px;
+	gap: var(--spacing);
 	z-index: 1001;
 	align-items: flex-end;
+	max-height: 100vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .svn-notification {
@@ -26,14 +31,14 @@
 	width: 300px;
 	overflow-wrap: normal;
 	text-overflow: ellipsis;
-	padding: 8px;
+	padding: var(--spacing);
 	border-radius: 4px;
 	color: white;
 	background-color: grey;
 	user-select: none;
 	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.8);
 	display: flex;
-	gap: 8px;
+	gap: var(--spacing);
 	align-items: center;
 }
 
