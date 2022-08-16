@@ -42,7 +42,7 @@
 }
 
 .svn-notification.svn-animated.svn-exiting {
-	animation: slide-out 350ms ease-in;
+	animation: slide-out 360ms ease-in;
 }
 
 .svn-notification-text {
