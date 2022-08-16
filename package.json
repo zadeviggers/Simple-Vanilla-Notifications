@@ -5,7 +5,7 @@
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"build-demo": "tsc && BUILD_DEMO=true vite build",
-		"lint": "pnpm run build && eslint lib/*.ts && publint",
+		"lint": "pnpm run build-demo && pnpm run build && eslint lib/*.ts && publint",
 		"npm-publish": "pnpm run lint && pnpm run build && pnpm publish"
 	},
 	"repository": {
