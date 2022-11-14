@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.1.0
+
+### Minor changes
+
+Exposes `animated` on the `Notification` type.
+
+### Patch changes
+
+Fix bug with `(prefers-reduced-motion: reduce)` not overriding `animated` properly.
+
 ## 3.0.1
 
 ### Patch changes

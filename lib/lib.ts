@@ -17,6 +17,7 @@ export interface Notification {
 	timeoutID?: ReturnType<typeof window.setTimeout> | any;
 	contents: NotificationContents;
 	element: HTMLElement;
+	animated: boolean;
 	dismiss: () => void;
 }
 
@@ -58,7 +59,7 @@ export function getNextNotificationID(
 	return highestID + 1;
 }
 
-export function shouldAnimate(defaultAnimated: boolean): boolean {
+export function shouldAnimate(animationPreference: boolean): boolean {
 	const motionOk = window.matchMedia(
 		"(prefers-reduced-motion: no-preference)"
 	).matches;
@@ -69,7 +70,7 @@ export function shouldAnimate(defaultAnimated: boolean): boolean {
 	}
 
 	// Otherwise use the default
-	return defaultAnimated;
+	return animationPreference;
 }
 
 export function createNotificationManager({
@@ -98,7 +99,7 @@ export function createNotificationManager({
 			autoDismissTimeout = defaultAutoDismissTimeout,
 			/* Compute this every time, because the user could theoretically
 			change their preference while the page is open */
-			animated = shouldAnimate(defaultAnimated),
+			animated = defaultAnimated,
 			exitAnimationTime = defaultExitAnimationTime,
 		}: NotificationOptions = {}
 	): Notification {
@@ -106,13 +107,15 @@ export function createNotificationManager({
 			throw new NotificationManagerDestroyedError();
 		}
 
+		const willAnimate = shouldAnimate(animated);
+
 		const id = getNextNotificationID(activeNotifications);
 
 		const notificationElement = element || document.createElement("div");
 		notificationElement.classList.add("svn-notification");
 		notificationElement.setAttribute("role", "status");
 		notificationElement.setAttribute("aria-live", "polite");
-		if (animated) {
+		if (willAnimate) {
 			notificationElement.classList.add("svn-animated");
 		}
 
@@ -138,7 +141,7 @@ export function createNotificationManager({
 
 		function dismiss() {
 			console.log("Dismissed");
-			if (!animated) {
+			if (!willAnimate) {
 				destroy();
 			}
 			notificationElement.classList.add("svn-exiting");
@@ -166,6 +169,7 @@ export function createNotificationManager({
 			contents,
 			element: notificationElement,
 			dismiss,
+			animated: willAnimate,
 		};
 
 		containerElement.appendChild(notificationElement);

@@ -32,6 +32,7 @@ const notification = createNotification("What's popping?");
 console.log(notification.id); // The Notification's ID. Can be passed to dismissNotification().
 console.log(notification.contents); // Whatever was passed as the first argument to createNotification().
 console.log(notification.element); // The notification's HTML element.
+console.log(notification.animated); // Whether the notification was animated. Always false if `(prefers-reduced-motion: reduce)` is set. Available since version 3.1.0.
 notification.dismiss(); // Dismiss the notification. Used internally by the dismiss button.
 ```
 
@@ -58,6 +59,7 @@ const { createNotification } = createNotificationManager({
 	// Whether to animate notifications.
 	// This can be overridden for each individual notification.
 	// NOTE: This doesn't actually animate notifications, it just adds an extra class to the elements. The animation is implemented in CSS.
+	// `(prefers-reduced-motion: reduce)` overrides this.
 	defaultAnimated: true,
 
 	// The amount to time to keep notification elements in the DOM after they're dismissed.
@@ -89,6 +91,7 @@ createNotification(":))))", {
 	// Whether to animate the notification.
 	// If this is unset, it uses the defaultAnimated value set in createNotificationManager.
 	// NOTE: This doesn't actually animate the notification, it just adds an extra class to the element. The animation is implemented in CSS.
+	// `(prefers-reduced-motion: reduce)` overrides this.
 	animated: true,
 
 	// The amount to time to keep the notification element in the DOM after it's dismissed.
