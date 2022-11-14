@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1
+
+### Patch changes
+
+Respect `(prefers-reduced-motion: reduce)`. This will override the animate parameter.
+
 ## 3.0.0
 
 #### Major changes
