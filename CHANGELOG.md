@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+#### Major changes
+
+Removes that annoying white bar fro the side of the notification stack. This should be a patch, but I'm making it a major because technically it's breaking since you can't scroll the notification stack if it overflows any more.
+
 ## 2.1.0
 
 ### Minor changes
