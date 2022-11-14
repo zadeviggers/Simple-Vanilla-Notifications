@@ -58,6 +58,20 @@ export function getNextNotificationID(
 	return highestID + 1;
 }
 
+export function shouldAnimate(defaultAnimated: boolean): boolean {
+	const motionOk = window.matchMedia(
+		"(prefers-reduced-motion: no-preference)"
+	).matches;
+
+	// Never animate if the user prefers reduced motion
+	if (!motionOk) {
+		false;
+	}
+
+	// Otherwise use the default
+	return defaultAnimated;
+}
+
 export function createNotificationManager({
 	defaultAutoDismissTimeout = 3200,
 	container,
@@ -82,7 +96,9 @@ export function createNotificationManager({
 			element,
 			dismissible = defaultDismissible,
 			autoDismissTimeout = defaultAutoDismissTimeout,
-			animated = defaultAnimated,
+			/* Compute this every time, because the user could theoretically
+			change their preference while the page is open */
+			animated = shouldAnimate(defaultAnimated),
 			exitAnimationTime = defaultExitAnimationTime,
 		}: NotificationOptions = {}
 	): Notification {
