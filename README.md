@@ -58,12 +58,12 @@ const { createNotification } = createNotificationManager({
 	// Whether to animate notifications.
 	// This can be overridden for each individual notification.
 	// NOTE: This doesn't actually animate notifications, it just adds an extra class to the elements. The animation is implemented in CSS.
-	animated: true,
+	defaultAnimated: true,
 
 	// The amount to time to keep notification elements in the DOM after they're dismissed.
 	// This can be overridden for each individual notification.
 	// NOTE: This doesn't actually animate the notifications, it just adds an extra class to the elements. The animation is implemented in CSS.
-	exitAnimationTime: 3200,
+	defaultExitAnimationTime: 3200,
 });
 
 createNotification("Hi! I'm a notification!");
