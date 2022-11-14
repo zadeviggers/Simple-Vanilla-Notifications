@@ -55,12 +55,32 @@
 	}
 }
 
-.svn-notification.svn-animated {
-	animation: slide-in 260ms ease-out;
-}
+@media (prefers-reduced-motion: no-preference) {
+	@keyframes slide-in {
+		from {
+			transform: translateX(110%);
+		}
+		to {
+			transform: translateX(0);
+		}
+	}
 
-.svn-notification.svn-animated.svn-exiting {
-	animation: slide-out 360ms ease-in;
+	@keyframes slide-out {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(110%);
+		}
+	}
+
+	.svn-notification.svn-animated {
+		animation: slide-in 260ms ease-out;
+	}
+
+	.svn-notification.svn-animated.svn-exiting {
+		animation: slide-out 360ms ease-in;
+	}
 }
 
 .svn-notification-text {
@@ -89,22 +109,4 @@
 .svn-notification-close-button:active {
 	background-color: darkgrey;
 	color: black;
-}
-
-@keyframes slide-in {
-	from {
-		transform: translateX(110%);
-	}
-	to {
-		transform: translateX(0);
-	}
-}
-
-@keyframes slide-out {
-	from {
-		transform: translateX(0);
-	}
-	to {
-		transform: translateX(110%);
-	}
 }

@@ -50,8 +50,11 @@ export function getNextNotificationID(
 	activeNotifications: ActiveNotifications
 ): NotificationID {
 	let highestID = -1;
-	for (const key of activeNotifications.keys())
-		if (key > highestID) highestID = key;
+	for (const key of activeNotifications.keys()) {
+		if (key > highestID) {
+			highestID = key;
+		}
+	}
 	return highestID + 1;
 }
 
@@ -66,7 +69,9 @@ export function createNotificationManager({
 
 	const containerElement: NotificationManager["element"] =
 		container || document.createElement("output");
-	if (!container) document.body.appendChild(containerElement);
+	if (!container) {
+		document.body.appendChild(containerElement);
+	}
 	containerElement.classList.add("svn-notifications-container");
 
 	const activeNotifications: ActiveNotifications = new Map();
@@ -81,7 +86,9 @@ export function createNotificationManager({
 			exitAnimationTime = defaultExitAnimationTime,
 		}: NotificationOptions = {}
 	): Notification {
-		if (destroyed) throw new NotificationManagerDestroyedError();
+		if (destroyed) {
+			throw new NotificationManagerDestroyedError();
+		}
 
 		const id = getNextNotificationID(activeNotifications);
 
@@ -89,28 +96,35 @@ export function createNotificationManager({
 		notificationElement.classList.add("svn-notification");
 		notificationElement.setAttribute("role", "status");
 		notificationElement.setAttribute("aria-live", "polite");
-		if (animated) notificationElement.classList.add("svn-animated");
+		if (animated) {
+			notificationElement.classList.add("svn-animated");
+		}
 
 		if (typeof contents === "string") {
 			const notificationContentsElement = document.createElement("span");
 			notificationContentsElement.classList.add("svn-notification-text");
 			notificationContentsElement.innerText = contents;
 			notificationElement.appendChild(notificationContentsElement);
-		} else if (contents instanceof HTMLElement)
+		} else if (contents instanceof HTMLElement) {
 			notificationElement.appendChild(contents);
+		}
 
 		let timeoutID: Notification["timeoutID"];
 
 		function destroy(destroyElement = true) {
 			// eslint-disable-next-line
 			window.clearTimeout(timeoutID as any);
-			if (destroyElement) notificationElement.remove();
+			if (destroyElement) {
+				notificationElement.remove();
+			}
 			activeNotifications.delete(id);
 		}
 
 		function dismiss() {
 			console.log("Dismissed");
-			if (!animated) destroy();
+			if (!animated) {
+				destroy();
+			}
 			notificationElement.classList.add("svn-exiting");
 			destroy(false); // Remove the notification internally without removing it's element
 			window.setTimeout(destroy, exitAnimationTime);
@@ -145,17 +159,23 @@ export function createNotificationManager({
 	}
 
 	function dismissNotification(notificationID: NotificationID) {
-		if (destroyed) throw new NotificationManagerDestroyedError();
+		if (destroyed) {
+			throw new NotificationManagerDestroyedError();
+		}
 		activeNotifications.get(notificationID)?.dismiss();
 	}
 
 	function dismissAllNotifications() {
-		if (destroyed) throw new NotificationManagerDestroyedError();
+		if (destroyed) {
+			throw new NotificationManagerDestroyedError();
+		}
 		activeNotifications.forEach((notification) => notification.dismiss());
 	}
 
 	function destroy() {
-		if (destroyed) throw new NotificationManagerDestroyedError();
+		if (destroyed) {
+			throw new NotificationManagerDestroyedError();
+		}
 		dismissAllNotifications();
 		containerElement.remove();
 		destroyed = true;
