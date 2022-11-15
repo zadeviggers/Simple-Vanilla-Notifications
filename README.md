@@ -207,7 +207,7 @@ The library is written in Typescript, so there should be built-in definitions. I
 
 ## Server-Side Rendering
 
-Make sure that you don't call `createNotificationManager` until it's in a context that has the document object available. Most of the time, this means that you should only call it client side.
+Make sure that you don't call `createNotificationManager` until it's in an enviroment that has `window` and `document` available. Most of the time, this means that you should only call it client side.
 You can do this in Solid by creating a signal for the notification manager that's initially null, and then create the manager and stick it in the Signal inside of an effect.
 
 ## Clean up
