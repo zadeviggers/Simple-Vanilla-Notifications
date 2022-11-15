@@ -60,13 +60,13 @@ export function getNextNotificationID(
 }
 
 export function shouldAnimate(animationPreference: boolean): boolean {
-	const motionOk = window.matchMedia(
-		"(prefers-reduced-motion: no-preference)"
+	const motionNotOk = window.matchMedia(
+		"(prefers-reduced-motion: reduce)"
 	).matches;
 
 	// Never animate if the user prefers reduced motion
-	if (!motionOk) {
-		false;
+	if (motionNotOk) {
+		return false;
 	}
 
 	// Otherwise use the default

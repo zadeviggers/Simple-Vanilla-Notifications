@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.1
+
+### Patch changes
+
+Fix `(prefers-reduced-motion: reduce)` override not working because somehow I forgot to write `return` (I blame the linter).
+
 ## 3.1.0
 
 ### Minor changes
