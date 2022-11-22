@@ -185,20 +185,19 @@ Super easy to customise! You can just stop importing the `defaults.css` file and
 
 ```css
 /* The notifications wrapper element. Use this to position them on the screen */
-.svn-notifications-container {
-}
+.svn-notifications-container {}
+
 /* The notifications themselves. Don't like the shadow? This is where you change it. */
-.svn-notification {
-}
+.svn-notification {}
+
 /* Notifications that should be animated. This is where the enter animation should be. */
-.svn-notification.svn-animated {
-}
+.svn-notification.svn-animated {}
+
 /* Exiting animated notifications. This is where the exit animation should be. */
-.svn-notification.svn-animated.svn-exiting {
-}
+.svn-notification.svn-animated.svn-exiting {}
+
 /* The close button on notifications that have it enabled */
-.svn-notification-close-button {
-}
+.svn-notification-close-button {}
 ```
 
 ## Typescript
