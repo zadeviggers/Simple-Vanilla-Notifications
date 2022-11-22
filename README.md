@@ -1,8 +1,8 @@
 # Simple Vanilla Notifications
 
-[Demo](https://svn.pages.dev/) | [GitHub](https://github.com/zadeviggers/Simple-Vanilla-Notifications) | [NPM](https://www.npmjs.com/package/simple-vanilla-notifications)
+Quick to set up, easy to customise notifications/snackbars/toasts for vanilla JavaScript (or TypeScript!) websites.
 
-Quick to set up, easy to customise notifications/snackbars/toasts for vanilla JavaScript websites.
+[Demo](https://svn.pages.dev/) | [GitHub](https://github.com/zadeviggers/Simple-Vanilla-Notifications) | [NPM](https://www.npmjs.com/package/simple-vanilla-notifications)
 
 ```
 pnpm add simple-vanilla-notifications
