@@ -27,6 +27,9 @@ export interface NotificationManagerOptions {
 	defaultDismissible?: boolean;
 	defaultAnimated?: boolean;
 	defaultExitAnimationTime?: number;
+	documentInstance?:
+		| Document
+		| { createElement: (tagName: string) => HTMLElement };
 }
 
 export interface NotificationManager {
@@ -60,7 +63,7 @@ export function getNextNotificationID(
 }
 
 export function shouldAnimate(animationPreference: boolean): boolean {
-	const motionNotOk = window.matchMedia(
+	const motionNotOk: boolean | null = window?.matchMedia?.(
 		"(prefers-reduced-motion: reduce)"
 	).matches;
 
@@ -79,13 +82,14 @@ export function createNotificationManager({
 	defaultDismissible = true,
 	defaultAnimated = true,
 	defaultExitAnimationTime = 350,
+	documentInstance = window.document,
 }: NotificationManagerOptions = {}): NotificationManager {
 	let destroyed = false;
 
 	const containerElement: NotificationManager["element"] =
-		container || document.createElement("output");
-	if (!container) {
-		document.body.appendChild(containerElement);
+		container || documentInstance.createElement("output");
+	if (!container && "body" in documentInstance) {
+		documentInstance.body.appendChild(containerElement);
 	}
 	containerElement.classList.add("svn-notifications-container");
 
@@ -111,7 +115,8 @@ export function createNotificationManager({
 
 		const id = getNextNotificationID(activeNotifications);
 
-		const notificationElement = element || document.createElement("div");
+		const notificationElement =
+			element || documentInstance.createElement("div");
 		notificationElement.classList.add("svn-notification");
 		notificationElement.setAttribute("role", "status");
 		notificationElement.setAttribute("aria-live", "polite");
@@ -120,11 +125,12 @@ export function createNotificationManager({
 		}
 
 		if (typeof contents === "string") {
-			const notificationContentsElement = document.createElement("span");
+			const notificationContentsElement =
+				documentInstance.createElement("span");
 			notificationContentsElement.classList.add("svn-notification-text");
 			notificationContentsElement.innerText = contents;
 			notificationElement.appendChild(notificationContentsElement);
-		} else if (contents instanceof HTMLElement) {
+		} else {
 			notificationElement.appendChild(contents);
 		}
 
@@ -132,7 +138,7 @@ export function createNotificationManager({
 
 		function destroy(destroyElement = true) {
 			// eslint-disable-next-line
-			window.clearTimeout(timeoutID as any);
+			clearTimeout(timeoutID as any);
 			if (destroyElement) {
 				notificationElement.remove();
 			}
@@ -146,7 +152,7 @@ export function createNotificationManager({
 			}
 			notificationElement.classList.add("svn-exiting");
 			destroy(false); // Remove the notification internally without removing it's element
-			window.setTimeout(destroy, exitAnimationTime);
+			setTimeout(destroy, exitAnimationTime);
 		}
 
 		// If the timeout should happen, schedule it
@@ -156,7 +162,7 @@ export function createNotificationManager({
 		}
 
 		if (dismissible) {
-			const closeButton = document.createElement("button");
+			const closeButton = documentInstance.createElement("button");
 			closeButton.classList.add("svn-notification-close-button");
 			closeButton.innerText = "X";
 			closeButton.addEventListener("click", dismiss);

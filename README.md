@@ -66,6 +66,10 @@ const { createNotification } = createNotificationManager({
 	// This can be overridden for each individual notification.
 	// NOTE: This doesn't actually animate the notifications, it just adds an extra class to the elements. The animation is implemented in CSS.
 	defaultExitAnimationTime: 3200,
+
+	// The `Document` instance to use for creating elements and so on.
+	// You probably don't need to touch this, but if you're doing SSR, this could be useful.
+	documentInstance: window.document,
 });
 
 createNotification("Hi! I'm a notification!");
@@ -206,11 +210,17 @@ The library is written in Typescript, so there should be built-in definitions. I
 
 ## Server-Side Rendering
 
-Make sure that you don't call `createNotificationManager` until it's in an enviroment that has `window` and `document` available. Most of the time, this means that you should only call it client side.
-You can do this in Solid by creating a signal for the notification manager that's initially null, and then create the manager and stick it in the Signal inside of an effect.
+You can call `createNotificationManager` in any environment, as long as it can access a `Document` instance (as well as standard global APIs like `console` and `setTimeout`). If you need to, you can access the `element` property on `Notification` and `NotificationManager` and use that to render strings.
+
+If you're running in an environment like Deno that doesn't have a global `document`, you can pass a `documentInstance` option with an instance of `Document`. If you're using Deno, `deno_dom` should work.
+
+### Ultra custom
+
+If you're doing some super complex custom stuff, you can provide it with a mock document that's just an object with a basic `createElement` method that takes a single string argument and returns an `HTMLElement`.
+Note that if you're doing this, you will have to implement a good chunk of `HTMLElement` as well (plus patch releases could break your setup if you don't implement every single part of `HTMLElement`), so it's probably easier to stick with a library like `deno_dom`.
 
 ## Clean up
 
 Most of the time you probably don't need to worry about this because you'll only have a single notification manager, but in some cases you might need to remove all of the notifications, or everything, including the notification container.
 
-There are two useful functions for this, both returned from `createNotificationManager`: `destroy` which destroys all of the active notifications and the container element (keep in mind that after calling this the notification manager is rendered completely useless, so only call this when you REALLY don't need it any more), and `dismissAllNotifications` which does what it says on the tin.
+There are two useful functions for this, both returned from `createNotificationManager`: `destroy` which destroys all of the active notifications and the container element (keep in mind that after calling this the notification manager is rendered completely useless, so only call this when you _REALLY_ don't need it any more), and `dismissAllNotifications` which does what it says on the tin.

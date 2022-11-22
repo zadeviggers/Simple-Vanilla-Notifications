@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.2.0
+
+### Minor Changes
+
+More reasonable SSR Support!
+
+- You can now pass `createNotificationManager` a `documentInstance` option to use a `Document` instance that isn't on the global object, for example,`deno_dom`.
+- All calls to methods on `document` other than `createElement` will be null-checked, so you can write your own super bare-bones document implementation if you're feeling crazy.
+- Changed `window.whatever()` calls to `whatever()` for environments that use a different global object.
+- The notification container will only be appended onto the end of the body if `body` exists on the `documentInstance`.
+
 ## 3.1.1
 
 ### Patch changes
