@@ -12,13 +12,13 @@ export interface NotificationOptions {
 }
 
 export interface Notification {
+	dismiss: () => void;
 	id: NotificationID;
 	// eslint-disable-next-line
 	timeoutID?: ReturnType<typeof window.setTimeout> | any;
 	contents: NotificationContents;
 	element: HTMLElement;
 	animated: boolean;
-	dismiss: () => void;
 }
 
 export interface NotificationManagerOptions {
@@ -77,11 +77,11 @@ export function shouldAnimate(animationPreference: boolean): boolean {
 }
 
 export function createNotificationManager({
-	defaultAutoDismissTimeout = 3200,
 	container,
-	defaultDismissible = true,
 	defaultAnimated = true,
+	defaultDismissible = true,
 	defaultExitAnimationTime = 350,
+	defaultAutoDismissTimeout = 3200,
 	documentInstance = window.document,
 }: NotificationManagerOptions = {}): NotificationManager {
 	let destroyed = false;
