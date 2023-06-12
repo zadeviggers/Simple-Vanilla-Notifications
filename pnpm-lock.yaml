@@ -11,8 +11,8 @@ devDependencies:
     specifier: ^8.27.0
     version: 8.27.0
   publint:
-    specifier: ^0.1.3
-    version: 0.1.3
+    specifier: ^0.1.12
+    version: 0.1.12
   typescript:
     specifier: ^5.0.2
     version: 5.1.3
@@ -1379,8 +1379,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /publint@0.1.3:
-    resolution: {integrity: sha512-EUk79f0YRmZy9jH+a86G5Z0Q5Axf2WnKV+f+oMdnTcqlEWrpeAC2psGn1mFTL5LCwRhwzKfZTnCGLnjARJ63Zg==}
+  /publint@0.1.12:
+    resolution: {integrity: sha512-8LxkO430t/SOhUl0qXQWdXq34m6oyLcPhE4Kc8eXhOEnB82vCHcShPQ2kH53n/ksC7jWdRWDP7MPGxKJbntQfg==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
